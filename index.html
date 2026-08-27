@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>UrbanEye AI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Satellite favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-code.js"
+        crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- ==========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🚌 <span>Urban X</span> AI
+        </div>
+
+
+        <nav>
+
+            <a href="#" class="active">
+                🏠 Dashboard
+            </a>
+
+            <a href="#" class="active">
+                🗺️ Live Map
+            </a>
+
+            <a href="#" class="active">
+                🛣️ Road Health
+            </a>
+
+            <a href="#" class="active">
+                🚗 Traffic Analytics
+            </a>
+
+            <a href="#" class="active">
+                🚨 Incidents
+            </a>
+
+            <a href="#" id="reportsBtn" class="active">
+                📊 Reports
+            </a>
+
+        </nav>
+
+
+        <div class="system-status">
+
+            <p>● SYSTEM ONLINE</p>
+
+            <span>
+                Edge AI Connected
+            </span>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="main-content">
+
+
+        <!-- ==========================================
+             DASHBOARD HEADER
+        ========================================== -->
+
+        <header>
+
+            <div>
+
+                <h1>
+                    Urban Intelligence Dashboard
+                </h1>
+
+                <p>
+                    Real-time insights from the public transport network
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+                🔔
+
+                <div class="admin">
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <span>
+                        Command Center
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==========================================
+             DASHBOARD STATISTICS
+        ========================================== -->
+
+        <section class="stats">
+
+
+            <!-- POTHOLE DETECTION -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🕳️
+                </div>
+
+                <div>
+
+                    <p>
+                        Pothole Detection
+                    </p>
+
+                    <h2 id="roadDefects">
+                        0
+                    </h2>
+
+                    <span>
+                        Detected today
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- VEHICLES -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🚗
+                </div>
+
+                <div>
+
+                    <p>
+                        Vehicles Detected
+                    </p>
+
+                    <h2 id="vehicle">
+                        0
+                    </h2>
+
+                    <span>
+                        Live detection
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TRAFFIC -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🚦
+                </div>
+
+                <div>
+
+                    <p>
+                        Traffic Status
+                    </p>
+
+                    <h2 id="trafficStatus">
+                        LOW
+                    </h2>
+
+                    <span>
+                        Current traffic density
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ALERTS -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🚨
+                </div>
+
+                <div>
+
+                    <p>
+                        Active Alerts
+                    </p>
+
+                    <h2 id="alerts">
+                        0
+                    </h2>
+
+                    <span>
+                        Requires attention
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==========================================
+             LIVE MAP
+        ========================================== -->
+
+        <section class="map-section">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Live Urban Map
+                    </h2>
+
+                    <p>
+                        Real-time events from connected buses
+                    </p>
+
+                </div>
+
+
+                <button>
+                    ● LIVE
+                </button>
+
+            </div>
+
+
+            <div id="map"></div>
+
+
+        </section>
+
+
+
+        <!-- ==========================================
+             BOTTOM SECTION
+        ========================================== -->
+
+        <section class="bottom-section">
+
+
+            <!-- RECENT EVENTS -->
+
+            <div class="events">
+
+                <h2>
+                    Recent Events
+                </h2>
+
+
+                <div class="event">
+
+                    <span>
+                        🕳️
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Pothole Detected
+                        </strong>
+
+                        <p>
+                            Bus-001 • 2 minutes ago
+                        </p>
+
+                    </div>
+
+                    <span class="status high">
+                        HIGH
+                    </span>
+
+                </div>
+
+
+
+                <div class="event">
+
+                    <span>
+                        🚗
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Heavy Traffic
+                        </strong>
+
+                        <p>
+                            Main Road • 5 minutes ago
+                        </p>
+
+                    </div>
+
+                    <span class="status medium">
+                        MEDIUM
+                    </span>
+
+                </div>
+
+
+
+                <div class="event">
+
+                    <span>
+                        🌊
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Waterlogging
+                        </strong>
+
+                        <p>
+                            Bus-003 • 10 minutes ago
+                        </p>
+
+                    </div>
+
+                    <span class="status high">
+                        HIGH
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- EDGE AI STATUS -->
+
+            <div class="ai-status">
+
+                <h2>
+                    Edge AI Status
+                </h2>
+
+
+                <div class="ai-item">
+
+                    <span>
+                        🟢
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            BUS-001
+                        </strong>
+
+                        <p>
+                            Online • AI Processing
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="ai-item">
+
+                    <span>
+                        🟢
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            BUS-002
+                        </strong>
+
+                        <p>
+                            Online • AI Processing
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="ai-item">
+
+                    <span>
+                        🟡
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            BUS-003
+                        </strong>
+
+                        <p>
+                            Low Network Signal
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             REPORTS PAGE
+        ================================================== -->
+
+        <section id="reportsPage" class="reports-page">
+
+
+            <!-- ==========================================
+                 REPORT HEADER
+            ========================================== -->
+
+            <div class="report-header">
+
+                <div>
+
+                    <h2>
+                        📊 Urban Intelligence Reports
+                    </h2>
+
+                    <p>
+                        Live insights generated from UrbanEye AI
+                    </p>
+
+                </div>
+
+
+                <button id="backDashboard">
+                    ← Back to Dashboard
+                </button>
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 REPORT SUMMARY CARDS
+            ========================================== -->
+
+            <div class="report-grid">
+
+
+                <!-- TOTAL VEHICLES -->
+
+                <div class="report-card">
+
+                    <span>
+                        🚗
+                    </span>
+
+                    <h3>
+                        Total Vehicles
+                    </h3>
+
+                    <h2 id="reportVehicles">
+                        0
+                    </h2>
+
+                    <p>
+                        Total vehicles detected
+                    </p>
+
+                </div>
+
+
+
+                <!-- ROAD HEALTH -->
+
+                <div class="report-card">
+
+                    <span>
+                        🛣️
+                    </span>
+
+                    <h3>
+                        Road Health
+                    </h3>
+
+                    <h2 id="reportDefects">
+                        0
+                    </h2>
+
+                    <p>
+                        Total road defects
+                    </p>
+
+                </div>
+
+
+
+                <!-- INCIDENTS -->
+
+                <div class="report-card">
+
+                    <span>
+                        🚨
+                    </span>
+
+                    <h3>
+                        Total Incidents
+                    </h3>
+
+                    <h2 id="reportAlerts">
+                        0
+                    </h2>
+
+                    <p>
+                        Total incidents / alerts
+                    </p>
+
+                </div>
+
+
+
+                <!-- TRAFFIC STATUS -->
+
+                <div class="report-card">
+
+                    <span>
+                        🚦
+                    </span>
+
+                    <h3>
+                        Traffic Status
+                    </h3>
+
+                    <h2 id="reportTraffic">
+                        LOW
+                    </h2>
+
+                    <p>
+                        Latest traffic condition
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 ADDITIONAL REPORT INFORMATION
+            ========================================== -->
+
+            <div class="report-overview">
+
+
+                <!-- TOTAL PERSONS -->
+
+                <div class="overview-card">
+
+                    <h3>
+                        👤 Total Persons
+                    </h3>
+
+                    <h2 id="reportPersons">
+                        0
+                    </h2>
+
+                    <p>
+                        Persons detected by AI
+                    </p>
+
+                </div>
+
+
+
+                <!-- ACTIVE FLEET -->
+
+                <div class="overview-card">
+
+                    <h3>
+                        🚌 Active Fleet
+                    </h3>
+
+                    <h2 id="reportBuses">
+                        3
+                    </h2>
+
+                    <p>
+                        Connected buses
+                    </p>
+
+                </div>
+
+
+
+                <!-- LATEST GPS -->
+
+                <div class="overview-card">
+
+                    <h3>
+                        📍 Latest GPS
+                    </h3>
+
+                    <h2 id="reportGPS">
+                        11.0168, 76.9558
+                    </h2>
+
+                    <p>
+                        Latest bus location
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==========================================
+                 DETECTION HISTORY
+            ========================================== -->
+
+            <div id="reportHistory" class="report-history">
+
+
+                <!-- HISTORY HEADER -->
+
+                <div class="history-header">
+
+                    <div>
+
+                        <h2>
+                            📋 Detection History
+                        </h2>
+
+                        <p>
+                            AI-generated reports from connected buses
+                        </p>
+
+                    </div>
+
+
+                    <span id="reportCount">
+                        0 Reports
+                    </span>
+
+                </div>
+
+
+
+                <!-- ==========================================
+                     REPORT TABLE
+                ========================================== -->
+
+                <div class="table-container">
+
+                    <table class="reports-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    🕒 Timestamp
+                                </th>
+
+                                <th>
+                                    🚗 Vehicles
+                                </th>
+
+                                <th>
+                                    👤 Persons
+                                </th>
+
+                                <th>
+                                    🚦 Traffic
+                                </th>
+
+                                <th>
+                                    🛣️ Defects
+                                </th>
+
+                                <th>
+                                    🚨 Incidents
+                                </th>
+
+                                <th>
+                                    📍 Latitude
+                                </th>
+
+                                <th>
+                                    📍 Longitude
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody id="reportsTableBody">
+
+                            <tr>
+
+                                <td colspan="8">
+                                    No reports saved yet.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- ==========================================
+     LEAFLET JAVASCRIPT
+========================================== -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<!-- ==========================================
+     URBANEYE JAVASCRIPT
+========================================== -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
